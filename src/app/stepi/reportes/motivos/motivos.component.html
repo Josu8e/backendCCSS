@@ -1,0 +1,29 @@
+<div style="width: 100%;">
+  <div class="row" style="height: 50px; align-items: center;">
+    <div style="white-space:nowrap" id="fecha">
+      Fecha: <input type="date" [(ngModel)]="fecha" (change)="consultar()">
+    </div>
+    <div class="col-md-3">
+      <ng-select title="Servicio" [items]="servicios" [(ngModel)]="servicioActual" name="servicio" #fun="ngModel"
+        [virtualScroll]="true" placeholder="Buscar servicio... " [notFoundText]="notFoundText" [clearAllText]="clearAllText"
+        (change)="consultar()" style="padding-left: 2.5%;">
+        <ng-template ng-label-tmp let-item="item" let-clear="clear">
+          <span class="ng-value-label">
+            <b>ID: </b>{{item.id}}
+            <b>Nombre:</b>
+            <small>{{item.nombre}}</small>
+          </span>
+        </ng-template>
+        <ng-template class="form-control" ng-option-tmp let-item="item">
+          <b>ID:</b> {{item.id}}
+          <br />
+          <small>
+            <b>Nombre:</b> {{item.nombre}}</small>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+</div>
+<div style="padding-top: 3%;width: 100%; height: 100vh;">
+  <chart [type]="chart.type" [data]="chart.data" [options]="chart.options"></chart>
+</div>

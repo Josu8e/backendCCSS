@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title">Retroalimentación recibida</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-justify">
+    {{this.retroalimentacion}}
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="activeModal.close()" title="Aceptar">
+    <span>Aceptar</span>
+  </button>
+</div>

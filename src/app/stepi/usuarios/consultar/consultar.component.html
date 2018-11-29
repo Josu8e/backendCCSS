@@ -1,0 +1,74 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col">
+            <h2>Usuarios</h2>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <input type="text" class="form-control" name="buscar" [(ngModel)]="buscar" placeholder="Buscar...">
+              <div class="input-group-prepend">
+                <span class="input-group-text color-icon text-light" id="basic-addon1">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+              <div class="input-group-btn search-panel">
+                <select title="Seleccionar opción de busqueda" class='form-control' id="dropdownbox" required [(ngModel)]='opcionSeleccionada'>
+                  <option class='opcion bg-light text-dark' *ngFor='let opcion of opciones' [value]="opcion">{{opcion}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="button-group col align-self-end">
+            <button class="float-right btn btn-success" title="Agregar usuario nuevo" (click)="abrirModal(null)">
+              <span>Agregar</span>
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <table class="table">
+          <tr>
+            <th>Cedula</th>
+            <th>Nombre</th>
+            <th>Nombre de usuario</th>
+            <th>Opciones</th>
+          </tr>
+
+          <tr *ngFor="let data of datosUsuarios | filtro:buscar:opcionSeleccionada |
+          paginate: { itemsPerPage: 6, currentPage: p }">
+            <td>{{data.cedula}}</td>
+            <td>{{data.nombre}}</td>
+            <td>{{data.nombre_usuario}}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-primary" title="Modificar usuario" (click)="abrirModal(data)">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-danger" title="Eliminar usuario" (click)="eliminarUsuario(data)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+          previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

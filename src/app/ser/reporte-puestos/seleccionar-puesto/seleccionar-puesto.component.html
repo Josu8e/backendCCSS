@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="col">
+          <h2>Reporte por puesto</h2>
+        </div>
+        <div class="col">
+          <div class="input-group">
+
+            <input type="text" class="form-control" name="buscar" [(ngModel)]="buscar" placeholder="Buscar...">
+
+            <div class="input-group-prepend">
+                <span class="input-group-text color-icon text-light" id="basic-addon1">
+                  <i class="fa fa-search"></i>
+                </span>
+            </div>
+
+            <div class="input-group-btn search-panel dropdownboxClass">
+              <select class='form-control' required [(ngModel)]='opcionSeleccionada'>
+                <option class='opcion  bg-light text-dark' *ngFor='let opcion of opciones' [value]="opcion">{{opcion}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </nb-card-header>
+
+      <nb-card-body>
+        <toaster-container [toasterconfig]="config"></toaster-container>
+
+        <table class="table">
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+          </tr>
+          <tr *ngFor="let puesto of nombreYCodigoDePuestosLista | filtro:buscar:opcionSeleccionada | paginate: { itemsPerPage: 6, currentPage: p }">
+          <!-- <tr *ngFor="let puesto of nombreYCodigoDePuestosLista  | paginate: { itemsPerPage: 6, currentPage: p }"> -->
+            <td>{{puesto.codigo}}</td>
+            <td>{{puesto.nombre}}</td>
+            <td>
+              <div class="btn-group" routerLink="/ser/reportePuestos/funcionarioPorPuesto/{{puesto.codigo}}">
+                <button class="btn btn-primary" >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+                             previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

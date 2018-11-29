@@ -1,0 +1,56 @@
+<!-- TODO: Agregar Filtro -->
+
+<toaster-container [toasterconfig]="config"></toaster-container>
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <h4>Conteo horas extra {{this.nombreServicio}}</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="button-group col align-self-end">
+          <button class="float-right btn btn-success agregar" title="Agregar conteo" (click)="abrirModal(null)">
+            <span>Agregar</span>
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Funcionario</th>
+              <th>Motivo</th>
+              <th>Sustituto</th>
+              <th>Horas Utilizadas</th>
+              <th>Puesto</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of registrosConteo | paginate: { itemsPerPage: 6, currentPage: p }">
+              <td>{{data.ausente}}</td>
+              <td>{{data.motivo}}</td>
+              <td>{{data.sustituto}}</td>
+              <td>{{data.horas}}</td>
+              <td>{{data.puesto}}</td>
+              <td>{{data.fecha}}</td>
+              <td>
+                <!-- <div class="btn-group">
+                  <button class="btn btn-primary" title="Modificar cantidad de horas extra" (click)="abrirModal(data)">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger" title="Eliminar registro de horas extra" (click)="eliminarHoras(data)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+          previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

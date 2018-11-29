@@ -1,0 +1,151 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="col">
+          <h2>Elegibles</h2>
+        </div>
+        <toaster-container [toasterconfig]="config"></toaster-container>
+
+      </nb-card-header>
+
+      <nb-card-body>
+        <form class="form-inline" [formGroup]="formBuscarElegibles" (ngSubmit)="onSubmit(formBuscarElegibles.value)" ngNativeValidate>
+
+          <div class="col" *ngIf="this.tipoPermisoUsuario == 6">
+            <div class="form-group">
+              <div class="form-control">
+                <label class="control-label" for="servicio_input">Servicio</label>
+                <select class="form-control" id="servicio_input" name="servicio_input" [formControl]="formBuscarElegibles.get('servicio_input')"
+                  [(ngModel)]="this.idServicio" (change)="obtenerPuestos()">
+                  <option *ngFor="let servicio of this.servicios" value="{{servicio.id}}">{{servicio.nombre}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col">
+            <div class="form-group">
+              <div class="form-control">
+                <label class="control-label" for="puesto_input">Puesto</label>
+                <select class="form-control" id="puesto_input" name="puesto_input" [formControl]="formBuscarElegibles.get('puesto_input')"
+                  [(ngModel)]="this.primerPuesto">
+                  <option *ngFor="let puesto of this.puestos" value="{{puesto.id}}">{{puesto.nombre}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-group">
+              <div class="form-control">
+                <label class="control-label" for="fechaInicio_input">Fecha inicial para nombrar</label>
+                <input [formControl]="formBuscarElegibles.get('fechaInicio_input')" id="fechaInicio_input" name="fechaInicio_input" type="Date"
+                  class="form-control input-md" required="" max="9999-12-31">
+              </div>
+              <div *ngIf="formBuscarElegibles.get('fechaInicio_input').invalid && (formBuscarElegibles.get('fechaInicio_input').dirty || formBuscarElegibles.get('fechaInicio_input').touched)"
+                class="alert alert-danger bg-white">
+                <small *ngIf="formBuscarElegibles.get('fechaInicio_input').errors.required" class="form-text text-muted text-danger align-left">Fecha requerida.</small>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="col">
+            <div class="form-group">
+              <div class="form-control">
+                <label class="control-label" for="fechaFinal_input">Fecha final para nombrar</label>
+                <input [formControl]="formBuscarElegibles.get('fechaFinal_input')" id="fechaFinal_input" name="fechaFinal_input" type="Date"
+                  class="form-control input-md" required="" max="9999-12-31">
+              </div>
+              <div *ngIf="formBuscarElegibles.get('fechaFinal_input').invalid && (formBuscarElegibles.get('fechaFinal_input').dirty || formBuscarElegibles.get('fechaFinal_input').touched)"
+                class="alert alert-danger bg-white">
+                <small *ngIf="formBuscarElegibles.get('fechaFinal_input').errors.required" class="form-text text-muted text-danger align-left">Fecha requerida.</small>
+              </div>
+            </div>
+
+          </div>
+          <br>
+          <br>
+
+          <button type="submit" title="Mostrar lista de elegibles" class="btn btn-primary buttonMostrarClass">Mostrar</button>
+
+
+        </form>
+
+      </nb-card-body>
+      <nb-card-footer>
+
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+
+<div [ngClass]="(this.elegibles.length > 0)? 'row':'row d-none'">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="input-group searchClass">
+          <input type="text" class="form-control" name="buscar" [(ngModel)]="buscar" placeholder="Buscar...">
+          <div class="input-group-prepend">
+            <span class="input-group-text color-icon text-light" id="basic-addon1">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+
+          <div class="input-group-btn search-panel">
+            <select class='form-control' required [(ngModel)]="opcionSeleccionada">
+              <option class='opcion  bg-light text-dark' *ngFor='let opcion of opciones' [value]="opcion">{{opcion}}</option>
+            </select>
+          </div>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+
+
+        <table class="table">
+          <tr>
+            <th>Disponible</th>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Tipo de Elegible</th>
+            <th>Días en Puesto</th>
+            <th>Días en Servicio</th>
+            <th>Días en el Centro</th>
+            <th>Nombrar</th>
+          </tr>
+
+          <tr *ngFor="let elegible of this.elegibles | filtro:buscar:opcionSeleccionada | paginate: { itemsPerPage: 6, currentPage: p }">
+            <td>
+              <div *ngIf="elegible.disponible == 1" style="color:green">
+                <i class="fas fa-circle fa-sm"></i>
+              </div>
+              <div *ngIf="elegible.disponible == 0" style="color:red">
+                <i class="fas fa-circle fa-sm"></i>
+              </div>
+            </td>
+            <td>{{elegible.cedula}}</td>
+            <td>{{elegible.nombre}}</td>
+            <td>{{elegible.categoria}}</td>
+            <td>{{elegible.diasPuesto}}</td>
+            <td>{{elegible.diasServicio}}</td>
+            <td>{{elegible.diasHospital}}</td>
+            <td>
+              <button title="Nombrar funcionario" 
+              class="btn btn-primary" (click)="nombrarElegibleOnClick(elegible)">
+                <i class="fa fa-file-alt"></i>
+            </button>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+          previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

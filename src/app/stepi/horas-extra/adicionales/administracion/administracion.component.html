@@ -1,0 +1,113 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header><h2>Autorización de Horas Adicionales</h2></nb-card-header>
+      <nb-card-body>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-secondary" title="Exportar">
+            <i class="fa fa-download"></i>
+            <span>Exportar</span>
+          </button> 
+        </div>
+
+        <div class="bg-light border info-box">
+          <div class="row">
+            <div class="col text-left">Hospital San Carlos Unidad Ejecutora 2401</div>
+            <div class="col text-right">Solicitud Tiempo Extraordinario</div>
+          </div>
+          <div class="row">
+            <div class="col text-left">Servicio: {{this.nombreServicio}}</div>
+            <div class="col text-right">Extras para el mes: {{ fechaAnterior | date:"MM/yyyy" }} </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th class="align-middle text-left" rowspan="4">Retroalimentación ( ver / editar )</th>
+                <th class="align-middle text-left" scope="col" rowspan="4">Cantidad de empleados</th>
+                <th class="align-middle text-left" scope="col" rowspan="4">Descripción por perfil de puesto</th>
+                <th class="align-middle text-center" colspan="7">Horas y montos solicitados</th>
+                <th class="align-middle text-left" rowspan="4">Justificación</th>
+              </tr>
+              <tr>
+                <th class="align-middle text-center" colspan="3">Horas presupuestadas</th>
+                <th class="align-middle text-center" colspan="2" >Horas</th>
+                <th class="align-middle text-center" colspan="2">Costo</th>
+              </tr>
+              <tr>
+                <th class="align-middle text-left" rowspan="2" >Total anual</th>
+                <th class="align-middle text-left" rowspan="2" >Promedio mensual</th>
+                <th class="align-middle text-left" rowspan="2" >Saldo a:</th>
+                <th class="align-middle text-left" >Autorizadas</th>
+                <th class="align-middle text-left" >Adicionales</th>
+                <th class="align-middle text-left" rowspan="2">Promedio por hora</th>
+                <th class="align-middle text-left" rowspan="2">Total Estimado</th>
+              </tr>
+              <tr>
+                <th class="align-middle text-left" >{{fechaAnterior | date:"MM/yy"}}</th>
+                <th class="align-middle text-left" >{{fechaAnterior | date: "MM/yy"}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let solicitud of this.solicitudesHePuesto">
+                <td class="align-middle text-center">
+                  <button type="button" class="btn btn-primary" (click)="retroalimentacion(solicitud.id_puesto)" title="Retroalimentación">
+                    <i class="fa fa-comment"></i>
+                  </button>
+                </td>
+                <td class="align-middle text-center">{{solicitud.cantidad_empleados}}</td>
+                <td class="align-middle text-justify">{{solicitud.nombre_puesto}}</td>
+                <td class="align-middle text-center">{{solicitud.horas_anuales}}</td>
+                <td class="align-middle text-center">{{solicitud.promedio_horas}}</td>
+                <td></td>
+                <td class="align-middle text-center">{{solicitud.horas_autorizadas_mes_anterior}}</td>
+                <td class="align-middle text-center">{{solicitud.horas}}</td>
+                <td class="align-middle text-center">{{solicitud.promedio_salarial}}</td>
+                <td class="align-middle text-center">{{solicitud.horas*solicitud.promedio_salarial}}</td>
+                <td class="align-middle text-justify">{{solicitud.justificacion}}</td>
+              </tr>
+            </tbody>
+            <tfoot class="w-100">
+              <tr>
+                <td class="align-middle text-center">
+                  <button type="button" class="btn btn-primary" (click)="retroalimentacionObservaciones()" title="Retroalimentación">
+                    <i class="fa fa-comment"></i>
+                  </button>
+                </td>
+                <td colspan="11">
+                  <p class="align-baseline text-justify"><b>Observaciones</b></p>
+                  {{this.observaciones}}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="bg-light border info-box">
+          <div class="row">
+            <div class="col text-left">Solicitante: {{this.solicitante}}</div>
+            <div class="col text-right">Fecha de solicitud</div>
+          </div>
+          <div class="row">
+            <div class="col text-left">Jefe de {{this.nombreServicio}}</div>
+            <div class="col text-right">{{this.fechaActual | date:"dd/MM/yyyy"}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <div class="float-right">
+          <button type="button" class="btn btn-danger" (click)="rechazarSolicitud()" [disabled]="this.estado" title="Rechazar">
+            <i class="fa fa-times"></i>
+            <span>Rechazar</span>
+          </button>
+          <button type="button" class="btn btn-success" (click)="aprobarSolicitud()" [disabled]="this.estado" title="Aprobar">
+            <i class="fa fa-check-circle"></i>
+            <span>Aprobar</span>
+          </button>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        Crear Puesto
+        <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="crearForm" (ngSubmit)="onSubmit(crearForm.value)" ngNativeValidate>
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="servicio_input">Nombre servicio</label>
+            <div class="col-md-12">
+              <select class="form-control" id="servicio_input" name="servicio_input" [formControl]="crearForm.get('servicio_input')" [(ngModel)]="this.primerElemento">
+                <option *ngFor="let servicio of this.servicios" value="{{servicio.id}}">{{servicio.nombre}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="codigo_input">Código</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('codigo_input')" id="codigo_input" name="codigo_input" type="text"
+                placeholder="Código" class="form-control input-md" required="" max="20">
+            </div>
+           
+            <div *ngIf="crearForm.get('codigo_input').invalid && (crearForm.get('codigo_input').dirty || crearForm.get('codigo_input').touched)" class="alert alert-danger">
+              <small *ngIf="crearForm.get('codigo_input').errors.required" class="form-text text-muted text-danger align-left">Código requerido.</small>
+              <small *ngIf="crearForm.get('codigo_input').errors.verificarCodigo" class="form-text text-muted text-danger align-left">Código en uso.</small>
+              <small *ngIf="crearForm.get('codigo_input').errors.maxlength" class="form-text text-muted text-danger align-left">Máximo 20 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="nombre_input">Nombre</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('nombre_input')" id="nombre_input" name="nombre_input" type="text" placeholder="Nombre"
+                class="form-control input-md" required="" max="70">
+            </div>
+            <div *ngIf="crearForm.get('nombre_input').invalid && (crearForm.get('nombre_input').dirty || crearForm.get('nombre_input').touched)" class="alert alert-danger">
+              <small *ngIf="crearForm.get('nombre_input').errors.required" 
+                class="form-text text-muted text-danger align-left">Nombre requerido.</small>
+              <small *ngIf="crearForm.get('nombre_input').errors.maxlength" 
+                class="form-text text-muted text-danger align-left">Máximo 70 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="salario_input">Base Salarial</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('salario_input')" id="salario_input" name="salario_input" type="number" placeholder="Base Salarial"
+                class="form-control input-md" required="" min="1" pattern="^[0-9]+" onpaste="return false;" onDrop="return false;"
+                autocomplete=off oninput="validity.valid||(value='');" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+            </div>
+            <div *ngIf="crearForm.get('salario_input').invalid && (crearForm.get('salario_input').dirty || crearForm.get('salario_input').touched)" class="alert alert-danger">
+              <small *ngIf="crearForm.get('salario_input').errors.required" class="form-text text-muted text-danger align-left">Salario requerido.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="descripcion_input">Descripción</label>
+            <div class="col-md-12">
+              <textarea [formControl]="crearForm.get('descripcion_input')" id="descripcion_input" name="descripcion_input" type="text"
+                placeholder="Descripción" required="" max="150"
+                class="form-control input-md" rows="4"></textarea>
+                <div *ngIf="crearForm.get('descripcion_input').invalid && (crearForm.get('descripcion_input').dirty || crearForm.get('descripcion_input').touched)" class="alert alert-danger">
+                  <small *ngIf="crearForm.get('descripcion_input').errors.required" 
+                    class="form-text text-muted text-danger align-left">Descripción requerida.</small>
+                  <small *ngIf="crearForm.get('descripcion_input').errors.maxlength" 
+                    class="form-text text-muted text-danger align-left">Máximo 150 caracteres.</small>
+                </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <button type="button" (click)="cancelar()" title="Cancelar crear puesto"
+            class="btn btn-primary">Cancelar</button>
+          <button type="submit" title="Aceptar crear puesto"
+            class="btn btn-success" [disabled]="crearForm.invalid">Aceptar</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<toaster-container [toasterconfig]="config"></toaster-container>

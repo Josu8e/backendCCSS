@@ -1,0 +1,58 @@
+// @nebular theming framework
+@import '~@nebular/theme/styles/theming';
+// @nebular out of the box themes
+@import '~@nebular/theme/styles/themes';
+
+// which themes you what to enable (empty to enable all)
+$nb-enabled-themes: (default, cosmic);
+
+$nb-themes: nb-register-theme((
+ // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+  font-main: Roboto,
+  font-secondary: Exo,
+  //Changes in theme
+  menu-submenu-active-border-color:#419cdb,
+  color-fg-highlight:#419cdb,
+  //color-success:#419cdb,
+  //card-header-success-bg:#419cdb,
+  //tabs-selected:#419cdb,
+  //route-tabs-selected:#419cdb,
+  context-menu-active-bg:#0062a1,
+  popover-border:#054372,
+  //smart-table-paging-bg-active:#419cdb,
+  //header
+  header-bg:#0062a1,
+  header-fg:#ffffff,
+  //footer
+  footer-fg: #000000,
+  //Buttons
+  btn-primary-bg:#428bca,
+  //inputs
+  form-control-selected-border-color:#419cdb,
+  //links
+  link-color:#428bca,
+  link-color-hover:#0062a1,
+  link-color-visited:#054372,
+  //general
+  color-primary:#0069d9,
+  color-danger:#dc3545,
+  menu-icon-font-size:1.5em,
+  //Palette colors from CCSS
+  a:#054372,
+  b:#0062a1,
+  c:#428bca,
+  d:#b3d4fc,
+), default, default);
+
+$nb-themes: nb-register-theme((
+  // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+  /*Change color in the theme*/
+  font-main: Roboto,
+  font-secondary: Exo,
+), cosmic, cosmic);

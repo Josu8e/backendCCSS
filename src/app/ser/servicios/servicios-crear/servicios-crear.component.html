@@ -1,0 +1,68 @@
+
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+
+      <nb-card-header>Crear Servicio
+      <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="crearForm" (ngSubmit)="onSubmit(crearForm.value)" ngNativeValidate>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="nombre_input">Nombre</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('nombre_input')" id="nombre_input" name="nombre_input" type="text"
+                     placeholder="Nombre" class="form-control input-md" required="">
+            </div>
+            <div *ngIf="crearForm.get('nombre_input').invalid && (crearForm.get('nombre_input').dirty || crearForm.get('nombre_input').touched)" class="alert alert-danger">
+              <small *ngIf="crearForm.get('nombre_input').errors.required"
+                     class="form-text text-muted text-danger align-left">Nombre requerido.</small>
+              <small *ngIf="crearForm.get('nombre_input').errors.maxlength"
+                     class="form-text text-muted text-danger align-left">Máximo 70 caracteres.</small>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="codigo_input">Código</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('codigo_input')"  id="codigo_input" name="codigo_input" type="text"
+                     placeholder="Código" class="form-control input-md" required="">
+            </div>
+            <div *ngIf="crearForm.get('codigo_input').invalid && (crearForm.get('codigo_input').dirty || crearForm.get('codigo_input').touched)" class="alert alert-danger">
+              <small *ngIf="crearForm.get('codigo_input').errors.required"
+                     class="form-text text-muted text-danger align-left">Código requerido.</small>
+              <small *ngIf="crearForm.get('codigo_input').errors.maxlength"
+                     class="form-text text-muted text-danger align-left">Máximo 20 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="descripcion_input">Descripción</label>
+            <div class="col-md-12">
+                  <textarea [formControl]="crearForm.get('descripcion_input')" id="descripcion_input"
+                            name="descripcion_input" type="text" placeholder="Descripción" class="form-control input-md"
+                            required="" maxlength="150" rows="4">
+                  </textarea>
+                 <div *ngIf="crearForm.get('descripcion_input').invalid && (crearForm.get('descripcion_input').dirty || crearForm.get('descripcion_input').touched)" class="alert alert-danger">
+                  <small *ngIf="crearForm.get('descripcion_input').errors.required"
+                         class="form-text text-muted text-danger align-left">Descripción requerida.</small>
+                  <small *ngIf="crearForm.get('descripcion_input').errors.maxlength"
+                         class="form-text text-muted text-danger align-left">Máximo 150 caracteres.</small>
+                </div>
+            </div>
+
+          </div>
+          <br>
+          <br>
+          <button type="button" class="btn btn-primary" title="Cancelar" (click)="cancelar()">Cancelar</button>
+          <button type="submit" title="Crear servicio" class="btn btn-primary" [disabled]="crearForm.invalid">Crear</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<toaster-container [toasterconfig]="config"></toaster-container>

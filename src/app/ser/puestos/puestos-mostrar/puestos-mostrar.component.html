@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="col">
+          <h2>Puestos</h2>
+        </div>
+        <div class="col">
+          <div class="input-group">
+
+            <input type="text" class="form-control" name="buscar" [(ngModel)]="buscar" placeholder="Buscar...">
+
+            <div class="input-group-prepend">
+              <span class="input-group-text color-icon text-light" id="basic-addon1">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+
+            <div class="input-group-btn search-panel dropdownboxClass">
+
+              <select class='form-control' required [(ngModel)]='opcionSeleccionada'>
+                <option class='opcion  bg-light text-dark' *ngFor='let opcion of opciones' [value]="opcion">{{opcion}}</option>
+              </select>
+
+
+            </div>
+          </div>
+        </div>
+
+      </nb-card-header>
+
+      <nb-card-body>
+        <toaster-container [toasterconfig]="config"></toaster-container>
+        <div class="button-group col align-self-end">
+          <button title="Crear puesto"
+            class="float-right btn btn-success" (click)="puestosAgregar()">Agregar
+              <i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+        <table class="table">
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Servicio</th>
+            <th>Descripción</th>
+            <th>Promedio Salarial</th>
+            <th>Acción</th>
+          </tr>
+
+          <tr *ngFor="let puesto of this.puestos | filtro:buscar:opcionSeleccionada | paginate: { itemsPerPage: 6, currentPage: p }">
+            <td>{{puesto.codigo}}</td>
+            <td>{{puesto.nombre}}</td>
+            <td>{{puesto.nombre_servicio}}</td>
+            <td>{{puesto.descripcion}}</td>
+            <td>{{puesto.promedio_salarial}}</td>
+            <td>
+              <div class="btn-group">
+                <button title="Editar puesto"
+                  class="btn btn-primary" (click)="puestosEditar(puesto)">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button title="Eliminar puesto" 
+                  class="btn btn-danger" (click)="puestosEliminar(content, puesto)">
+                    <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+          previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar Puesto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>¿Desea continuar?</p>
+    <p>Se eliminará el puesto y la información asociada.</p>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="c('Close click')">Cancelar</button>
+    <button type="button" (click)="eliminarPuesto()" class="btn btn-danger">Aceptar</button>
+  </div>
+</ng-template>

@@ -1,0 +1,11 @@
+export class Funcionario {
+  cedula: string;
+  nombre: string;
+  apellido1: string;
+  apellido2: string;
+  fecha_nacimiento: Date;
+  fecha_ingreso: Date;
+  numero_tarjeta: number;
+  correo: string;
+  numero: string[];
+}

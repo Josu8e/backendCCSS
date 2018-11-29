@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        Crear Nombramiento
+        <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </nb-card-header>
+      <nb-card-body>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Cédula: </th>
+              <td>{{this.nombramiento.cedula}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Nombre: </th>
+              <td>{{this.nombreCompleto}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Puesto: </th>
+              <td>{{this.puesto.nombre}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Fecha Inicio: </th>
+              <td>{{this.nombramiento.fecha_inicio}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Fecha Final: </th>
+              <td>{{this.nombramiento.fecha_fin}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h6 class="card-subtitle mb-2">Definir los siguientes Datos:</h6>
+        <br>
+        <br>
+
+        <form [formGroup]="crearForm" (ngSubmit)="onSubmit(crearForm.value)" ngNativeValidate>
+
+          <div class="form-group">
+            <label for="sustituye_input" class="col-sm-12 control-label">
+              Sustituye a:
+            </label>
+            <div class="col-sm-12">
+              <input id="sustituye_input" name="sustituye_input" type="text" class="form-control" [formControl]="crearForm.get('sustituye_input')"
+                [(ngModel)]="this.nombramiento.sustituye" [ngbTypeahead]="searchFuncionarios" (focus)="focus$.next($event.target.value)"
+                (click)="click$.next($event.target.value)" #instance="ngbTypeahead" required=""
+                placeholder="Nombre funcionario" />
+            </div>
+
+            <div *ngIf="crearForm.get('sustituye_input').invalid && (crearForm.get('sustituye_input').dirty || crearForm.get('sustituye_input').touched)"
+              class="alert alert-danger bg-white">
+              <small *ngIf="crearForm.get('sustituye_input').errors.required" class="form-text text-muted text-danger align-left">Nombre requerido.</small>
+              <small *ngIf="crearForm.get('sustituye_input').errors.verificarNombre" class="form-text text-muted text-danger align-left">
+                Funcionario no existe en el sistema. Seleccione un nombre de la lista.
+              </small>
+              <small *ngIf="crearForm.get('sustituye_input').errors.maxlength" class="form-text text-muted text-danger align-left">Máximo 70 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="tiempo_input">
+              Tiempo Laboral:
+            </label>
+            <div class="col-md-12">
+              <select class="form-control" required="" id="tiempo_input" name="tiempo_input" [formControl]="crearForm.get('tiempo_input')" [(ngModel)]="this.tiempoLaboralNombramiento">
+                <option *ngFor="let tiempo of this.listaTiempos" value="{{tiempo}}">{{tiempo}}</option>
+              </select>
+            </div>
+            <div *ngIf="crearForm.get('tiempo_input').invalid && (crearForm.get('tiempo_input').dirty || crearForm.get('tiempo_input').touched)"
+              class="alert alert-danger bg-white">
+              <small *ngIf="crearForm.get('tiempo_input').errors.required" class="form-text text-muted text-danger align-left">Tiempo requerido.</small>
+              <small *ngIf="crearForm.get('tiempo_input').errors.maxlength" class="form-text text-muted text-danger align-left">Máximo 50 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="tipo_input">
+              Tipo Nombramiento:
+            </label>
+            <div class="col-md-12">
+              <select class="form-control" required="" id="tipo_input" name="tipo_input" [formControl]="crearForm.get('tipo_input')" [(ngModel)]="this.tipoNombramiento">
+                <option *ngFor="let tipo of this.listaTipos" value="{{tipo}}">{{tipo}}</option>
+              </select>
+            </div>
+            <div *ngIf="crearForm.get('tipo_input').invalid && (crearForm.get('tipo_input').dirty || crearForm.get('tipo_input').touched)"
+              class="alert alert-danger bg-white">
+              <small *ngIf="crearForm.get('tipo_input').errors.required" class="form-text text-muted text-danger align-left">Tipo requerido.</small>
+              <small *ngIf="crearForm.get('tipo_input').errors.maxlength" class="form-text text-muted text-danger align-left">Máximo 30 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-12 control-label" for="motivo_input">
+              Motivo Nombramiento:
+            </label>
+            <div class="col-md-12">
+              <select class="form-control" required="" id="motivo_input" name="motivo_input" [formControl]="crearForm.get('motivo_input')" ngModel={{this.motivoNombramiento}}>
+                <option *ngFor="let motivo of this.listaMotivos" value="{{motivo}}">{{motivo}}</option>
+              </select>
+            </div>
+            <div *ngIf="crearForm.get('motivo_input').invalid && (crearForm.get('motivo_input').dirty || crearForm.get('motivo_input').touched)"
+              class="alert alert-danger bg-white">
+              <small *ngIf="crearForm.get('motivo_input').errors.required" class="form-text text-muted text-danger align-left">Motivo requerido.</small>
+              <small *ngIf="crearForm.get('motivo_input').errors.maxlength" class="form-text text-muted text-danger align-left">Máximo 50 caracteres.</small>
+            </div>
+          </div>
+          <br>
+          <br>
+          <button type="button" (click)="cancelar()" title="Cancelar editar puesto" class="btn btn-primary">Cancelar</button>
+          <button type="submit" title="Aceptar editar puesto" class="btn btn-success" [disabled]="crearForm.invalid">Aceptar</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<toaster-container [toasterconfig]="config"></toaster-container>

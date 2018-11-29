@@ -1,0 +1,35 @@
+.table {
+    text-align: center;
+}
+  
+.table th {
+    border-top: none;
+}
+
+.my-pagination /deep/ .ngx-pagination a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.dropdownboxClass {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: white;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.color-icon {
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.searchClass {
+    padding: 1.5%;
+    margin-bottom: 2%;
+}
+.buttonMostrarClass {
+    width: 100%;
+    margin: 1.5%;
+    padding: 1%;
+}

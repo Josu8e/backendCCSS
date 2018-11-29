@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title">Ingrese los Datos</h4>
+  <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #formSolicitud="ngForm">
+<div class="modal-body">
+  <div class="form-group">
+    <label for="cantEmpleados">Cantidad de Empleados</label>
+    <input type="number" class="form-control" id="cantEmpleados" name="cantEmpleados" min="1" [(ngModel)]="this.solicitudActual.cantidad_empleados" required customMin="1" #cantEmpleados="ngModel">
+    <div *ngIf="cantEmpleados.invalid && (cantEmpleados.dirty || cantEmpleados.touched)">
+      <small *ngIf="cantEmpleados.errors.required" class="form-text text-muted text-danger text-right">Por favor indique la cantidad de empleados</small>
+      <small *ngIf="cantEmpleados.errors?.customMin" class="form-text text-muted text-danger text-right">El mínimo número de empleados permitido es 1</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="horasSolicitadas">Horas Solicitadas</label>
+    <input type="number" class="form-control" id="horasSolicitadas" name="horasSolicitadas" min="1" [(ngModel)]="this.solicitudActual.horas" required customMin="1" #horasSolicitadas="ngModel">
+    <div *ngIf="horasSolicitadas.invalid && (horasSolicitadas.dirty || horasSolicitadas.touched)">
+        <small *ngIf="horasSolicitadas.errors.required" class="form-text text-muted text-danger text-right">Por favor indique la cantidad de horas solicitadas</small>
+        <small *ngIf="horasSolicitadas.errors?.customMin" class="form-text text-muted text-danger text-right">El mínimo número de horas extra que se puede solicitar es 1</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="justificacion">Justificación</label>
+    <textarea type="text" class="form-control" id="justificacion" name="justificacion" placeholder="Ingrese la justificación" [(ngModel)]="this.solicitudActual.justificacion" required #justificacion="ngModel"></textarea>
+    <div *ngIf="justificacion.invalid && (justificacion.dirty || justificacion.touched)">
+        <small *ngIf="justificacion.errors.required" class="form-text text-muted text-danger text-right">Por favor escriba la justificación de la solicitud</small>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" name="boton" class="btn btn-danger" (click)="cerrar()" title="Cancelar">
+    <i class="fa fa-times"></i>
+    <span>Cancelar</span>
+  </button>
+  <button type="button" name="boton" class="btn btn-primary" (click)="guardarDatos()" [disabled]="formSolicitud.invalid" title="Guardar">
+    <i class="fa fa-save"></i>
+    <span>Guardar</span>
+  </button>
+</div>
+</form>

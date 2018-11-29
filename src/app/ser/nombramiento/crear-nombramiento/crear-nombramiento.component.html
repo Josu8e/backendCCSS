@@ -1,0 +1,230 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>Registrar Nombramiento</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="crearForm" (ngSubmit)="onSubmit(crearForm.value)" >
+
+          <div>
+            <h6 class="text-left"> Funcionario a Nombrar </h6>
+            <br>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="cedula_input">Cédula</label>
+              <div class="col-md-12">
+                <input
+                [formControl]="crearForm.get('cedula_input')"
+                id="cedula_input"
+                name="cedula_input"
+                type="number"
+                placeholder="Número de Cédula sin espacios ni otros caracteres"
+                class="form-control input-md"
+                [ngbTypeahead]="busquedaCedulas"
+                (focus)="focusCedulaFuncionarioNombrar$.next($event.target.value)"
+                (click)="clickCedulaFuncionarioNombrar$.next($event.target.value)"
+                #instance="ngbTypeahead"
+              />
+              </div>
+
+            </div>
+
+            <!--  -->
+
+
+
+            <!--  -->
+
+
+
+
+          </div>
+
+          <hr>
+
+          <div>
+            <h6 class="text-left"> Funcionario a Sustituir </h6>
+            <br>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="sustituye_input">Nombre</label>
+
+
+              <div class="col-md-12">
+
+                <input
+                  [formControl]="crearForm.get('sustituye_input')"
+                  id="sustituye_input"
+                  name="sustituye_input"
+                  type="text"
+                  placeholder="Nombre y apellidos"
+                  class="form-control input-md"
+                  [ngbTypeahead]="busquedaNombreApellidos"
+                  (focus)="focusNombreFuncionarioSustituir$.next($event.target.value)"
+                  (click)="clickNombreFuncionarioSustituir$.next($event.target.value)"
+                  #inst="ngbTypeahead"
+                  required="" >
+              </div>
+
+
+
+            </div>
+
+          </div>
+
+          <hr>
+
+          <div>
+
+            <h6 class="text-left"> Otros Aspectos </h6>
+            <br>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="id_puesto_input">Código de Puesto a Nombrar</label>
+              <div class="col-md-12">
+
+                <input
+                  [formControl]="crearForm.get('id_puesto_input')"
+                  id="id_puesto_input"
+                  name="id_puesto_input"
+                  type="text"
+                  placeholder="ID de Puesto a Nombrar"
+                  class="form-control input-md"
+                  [ngbTypeahead]="busquedaCodigoPuestos"
+                  (focus)="focusCodigoPuesto$.next($event.target.value)"
+                  (click)="clickCodigoPuesto$.next($event.target.value)"
+                  #instanceCodigoPuesto="ngbTypeahead"
+                />
+
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="fecha_inicio_input">Fecha de Inicio del Nombramiento</label>
+              <div class="col-md-12">
+                <input [formControl]="crearForm.get('fecha_inicio_input')" id="fecha_inicio_input" name="fecha_inicio_input" type="Date"
+                       class="form-control input-md" required="" >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="fecha_fin_input">Fecha de Fin del Nombramiento</label>
+              <div class="col-md-12">
+                <input [formControl]="crearForm.get('fecha_fin_input')" id="fecha_fin_input" name="fecha_fin_input" type="Date"
+                       class="form-control input-md" required="" >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="tiempo_input">Tiempo</label>
+              <div class="col-md-12">
+
+                <div class="input-group mb-3">
+
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="tiempo_input">Escoger</label>
+                  </div>
+
+                  <select class="custom-select" id="tiempo_input"  name="tiempo_input" [formControl]="crearForm.get('tiempo_input')" >
+                    <!-- <option selected>Escoger...</option>  -->
+                    <option value="Medio">Medio Tiempo</option>
+                    <option value="Completo">Tiempo Completo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="tipo_input">Tipo</label>
+              <div class="col-md-12">
+
+                <div class="input-group mb-3">
+
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="tipo_input">Escoger</label>
+                  </div>
+
+                  <select class="custom-select" id="tipo_input"  name="tipo_input" [formControl]="crearForm.get('tipo_input')" >
+                    <!-- <option selected>Escoger...</option>  -->
+                    <option value="Interino">Interino</option>
+                    <option value="Propiedad">Propiedad</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- motivo viejo
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="motivo_input">Motivo</label>
+              <div class="col-md-12">
+                <input [formControl]="crearForm.get('motivo_input')" id="motivo_input" name="motivo_input" type="text"
+                       class="form-control input-md" required="" >
+              </div>
+            </div> -->
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="motivo_input">Motivo</label>
+              <div class="col-md-12">
+
+                <div class="input-group mb-3">
+
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="motivo_input">Escoger</label>
+                  </div>
+
+                  <select class="custom-select" id="motivo_input"  name="motivo_input" [formControl]="crearForm.get('motivo_input')" >
+                    <!-- <option selected>Escoger...</option>  -->
+                    <option value="Vacaciones">Vacaciones</option>
+                    <option value="Dia libre">Día libre</option>
+                    <option value="PSGS">Permiso con gose de salario</option>
+                    <option value="PCGS">Permiso sin gose de salario</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <br>
+          <br>
+          <button type="button" (click)="cancelar()" class="btn btn-primary">Cancelar</button>
+          <button type="submit" (click)="prueba(content)" class="btn btn-primary">Aceptar</button>
+
+        </form>
+
+
+      </nb-card-body>
+
+
+      <nb-card-footer>
+
+        <!--
+        <button type="button" class="btn btn-primary">Cancelar</button>
+        <button type="button" class="btn btn-primary">Aceptar</button>
+        -->
+
+      </nb-card-footer>
+    </nb-card>
+  </div>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">¡Atención!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <strong>¡Esta a punto de realizar un nombramiento superpuesto. ¿Esta seguro?</strong>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="c('Cancel click')">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="llama_crear()" placement="top" (click)="c('Cancel click')">Agregar</button>
+    <!--btn-outline-primary mb-1  (click)="nombramientosCrear(nombramiento)"  (click)="c('Cancel click')"  -->
+</div>
+</ng-template>
+
+</div>
+<toaster-container [toasterconfig]="config"></toaster-container>

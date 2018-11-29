@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+
+      <nb-card-header>Crear Servicio</nb-card-header>
+
+      <nb-card-body>
+        <form [formGroup]="crearForm" (ngSubmit)="onSubmit(crearForm.value)" >
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="nombre_input">Nombre</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('nombre_input')" id="nombre_input" name="nombre_input" type="text"
+                     placeholder="Nombre" class="form-control input-md" required="" maxlength="20">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="codigo_input">Codigo</label>
+            <div class="col-md-12">
+              <input [formControl]="crearForm.get('codigo_input')"  id="codigo_input" name="codigo_input" type="text"
+                     placeholder="Codigo" class="form-control input-md" >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="descripcion_input">Descripción</label>
+            <div class="col-md-12">
+                  <textarea [formControl]="crearForm.get('descripcion_input')" id="descripcion_input" name="descripcion_input" type="text"
+                            placeholder="descripción" class="form-control input-md" required="" maxlength="150" rows="4">
+                  </textarea>
+            </div>
+          </div>
+          <br>
+          <br>
+          <button type="button" class="btn btn-primary">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Aceptar</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

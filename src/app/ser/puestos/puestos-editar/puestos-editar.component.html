@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-12 col-md-12">
+      <nb-card>
+          <nb-card-header>
+            Editar Puesto
+            <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </nb-card-header>
+          <nb-card-body>
+            <form [formGroup]="editarForm" (ngSubmit)="onSubmit(editarForm.value)" ngNativeValidate>
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="servicio_input">Nombre servicio</label>
+              <div class="col-md-12">
+                  <select class="form-control" id="servicio_input" name="servicio_input"
+                  [formControl]="editarForm.get('servicio_input')" [(ngModel)]="this.puesto.id_servicio">
+                    <option *ngFor="let servicio of this.servicios" value="{{servicio.id}}">{{servicio.nombre}}</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="codigo_input">Código</label>
+              <div class="col-md-12">
+                <input [formControl]="editarForm.get('codigo_input')" id="codigo_input" name="codigo_input" type="text"
+                placeholder="Código" class="form-control input-md" required="" maxlength="20"
+                [(ngModel)]="this.puesto.codigo">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="nombre_input">Nombre</label>
+              <div class="col-md-12">
+                <input [formControl]="editarForm.get('nombre_input')" id="nombre_input" name="nombre_input" type="text"
+                placeholder="Nombre" class="form-control input-md" required="" maxlength="30"
+                [(ngModel)]="this.puesto.nombre">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="salario_input">Promedio Salarial</label>
+              <div class="col-md-12">
+                <input [formControl]="editarForm.get('salario_input')" id="salario_input" name="salario_input" type="number"
+                placeholder="Promedio Salarial" class="form-control input-md" required="" min="1"
+                pattern="^[0-9]+" onpaste="return false;" onDrop="return false;" autocomplete=off
+                oninput="validity.valid||(value='');" [(ngModel)]="this.puesto.promedio_salarial"
+                step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-12 control-label" for="descripcion_input">Descripción</label>
+              <div class="col-md-12">
+                <textarea [formControl]="editarForm.get('descripcion_input')" id="descripcion_input" name="descripcion_input" type="text"
+                placeholder="Descripción" class="form-control input-md" required="" maxlength="150" rows="4"
+                [(ngModel)]="this.puesto.descripcion"></textarea>
+
+              </div>
+            </div>
+            <br>
+            <br>
+            <button type="button" (click)="cancelar()" title="Cancelar editar puesto"
+              class="btn btn-primary">Cancelar</button>
+            <button type="submit" title="Aceptar editar puesto"
+              class="btn btn-success" [disabled]="editarForm.invalid">Aceptar</button>
+          </form>
+          </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+
+  <toaster-container [toasterconfig]="config"></toaster-container>

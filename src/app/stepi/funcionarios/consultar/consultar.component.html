@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h2>Funcionarios</h2>
+          </div>
+
+          <div class="col-sm-12 col-md-6">
+            <div class="input-group">
+
+              <input type="text" class="form-control" name="buscar" [(ngModel)]="buscar" placeholder="Buscar...">
+
+              <div class="input-group-prepend">
+                <span class="input-group-text color-icon text-light" id="basic-addon1">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+
+              <div class="input-group-btn search-panel">
+                <select class='form-control' id="dropdownbox" required [(ngModel)]='opcionSeleccionada'>
+                  <option class='opcion  bg-light text-dark' *ngFor='let opcion of opciones' [value]="opcion" title="Seleccionar opción de busqueda">{{opcion}}</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </nb-card-header>
+
+
+
+      <nb-card-body>
+        <toaster-container [toasterconfig]="config"></toaster-container>
+        <div class="button-group col align-self-end">
+          <button class="float-right btn btn-success" (click)="abrirModal(null)" title="Agregar funcionario">Agregar
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th>Cedula</th>
+              <th>Nombre Completo</th>
+              <th>Fecha Nacimiento</th>
+              <th>Fecha Ingreso</th>
+              <th>Numero Tarjeta</th>
+              <th>Correo</th>
+              <th>Opciones</th>
+            </tr>
+
+            <tr *ngFor="let data of datosFuncionario | filtro:buscar:opcionSeleccionada |
+            paginate: { itemsPerPage: 6, currentPage: p }">
+              <td>{{data.cedula}}</td>
+              <td>{{data.nombre}} {{data.apellido1}} {{data.apellido2}}</td>
+              <td>{{data.fecha_nacimiento | date:"dd/MM/yyyy" }}</td>
+              <td>{{data.fecha_ingreso | date:"dd/MM/yyyy"}}</td>
+              <td>{{data.numero_tarjeta}}</td>
+              <td>{{data.correo}}</td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-info" (click)="abrirModal(data, false)" title="Ver Información">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                  <button class="btn btn-primary" (click)="abrirModal(data, true)" title="Editar">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger" (click)="borrarFuncionario(data)" title="Eliminar">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event"
+          autoHide="true" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>Autores</nb-card-header>
+      <nb-card-body>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">Carrera</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let author of authors">
+              <td>{{author.fullname}}</td>
+              <td>{{author.career}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

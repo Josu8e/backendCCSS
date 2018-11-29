@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title">Autorización de Solicitud</h4>
+  <button type="button" class="close" aria-label="Close" (click)="this.activeModal.close(this.respaldo);">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #formSolicitud="ngForm">
+<div class="modal-body">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Puesto</th>
+          <th>Horas solicitadas</th>
+          <th>Horas Autorizadas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let solicitud of this.solicitudesHePuesto; let i = index">
+          <td>{{solicitud.nombre_puesto}}</td>
+          <td class="text-center align-middle">{{solicitud.horas_solicitadas}}</td>
+          <td>
+            <input type="number" class="form-control" name="horasAutorizadas{{i}}" min="1" [(ngModel)]="solicitud.horas_autorizadas" required customMin="1" customMax="{{solicitud.horas_solicitadas}}" #horasAutorizadas="ngModel"/>
+            <div *ngIf="horasAutorizadas.invalid && (horasAutorizadas.dirty || horasAutorizadas.touched)">
+              <small *ngIf="horasAutorizadas.errors.required" class="form-text text-muted text-danger text-right">Por favor indique las horas autorizadas</small>
+              <small *ngIf="horasAutorizadas.errors?.customMin" class="form-text text-muted text-danger text-right">Debe autorizar al menos una hora</small>
+              <small *ngIf="horasAutorizadas.errors?.customMax" class="form-text text-muted text-danger text-right">La cantidad de horas autorizadas no puede ser mayor a las solicitadas</small>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" name="boton" class="btn btn-danger" (click)="this.activeModal.close(this.respaldo)" title="Cancelar">
+    <i class="fa fa-times"></i>
+    <span>Cancelar</span>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="guardarDatos()" [disabled]="formSolicitud.invalid" title="Guardar">
+    <i class="fa fa-save"></i>
+    <span>Guardar</span>
+  </button>
+</div>
+</form>

@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h4 class="modal-title">Aprobación Presupuestaria</h4>
+  <button type="button" class="close" aria-label="Close" (click)="this.activeModal.close(this.respaldo)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #formSolicitud="ngForm">
+<div class="modal-body">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Puesto</th>
+          <th>Horas Autorizadas</th>
+          <th>Promedio Salarial</th>
+          <th>Costo Promedio Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let solicitud of this.solicitudesHePuesto; let i = index">
+          <td>{{solicitud.nombre_puesto}}</td>
+          <td>{{solicitud.horas_autorizadas}}</td>
+          <td>{{solicitud.promedio_salarial}}</td>
+          <td>
+            <input type="number" class="form-control" name="MontoReservado{{i}}" min="1" [(ngModel)]="solicitud.monto_reservado" required customMin="1" #montoReservado="ngModel">
+            <div *ngIf="montoReservado.invalid && (montoReservado.dirty || montoReservado.touched)">
+              <small *ngIf="montoReservado.errors.required" class="form-text text-muted text-danger text-right">Por favor indique el monto reservado</small>
+              <small *ngIf="montoReservado.errors?.customMin" class="form-text text-muted text-danger text-right">No puede presupuestar menos de 1 colón</small>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" name="boton" class="btn btn-danger" (click)="this.activeModal.close(this.respaldo)" title="Cancelar">
+    <i class="fa fa-times"></i>
+    <span>Cancelar</span>
+  </button>
+  <button type="button" class="btn btn-primary" (click)="guardarDatos()" [disabled]="formSolicitud.invalid" title="Guardar">
+    <i class="fa fa-save"></i>
+    <span>Guardar</span>
+  </button>
+</div>
+</form>
+

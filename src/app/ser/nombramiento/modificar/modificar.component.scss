@@ -1,0 +1,13 @@
+
+.imagen {
+  width: 35px;
+  margin-left: 90%;
+  margin-right: 80%;
+  margin-top: -5%;
+}
+
+nb-card-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+

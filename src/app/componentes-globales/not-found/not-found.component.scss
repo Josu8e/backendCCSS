@@ -1,0 +1,32 @@
+@import '../../@theme/layouts/sample/sample.layout';
+@import '../../@theme/styles/themes';
+@import '../../@theme/styles/styles';
+.flex-centered {
+  margin: auto;
+}
+//nb-card-body {
+////  display: flex;
+////}
+
+.title {
+  text-align: center;
+}
+
+.sub-title {
+  text-align: center;
+  display: block;
+  margin-bottom: 3rem;
+}
+
+.btn {
+  margin-bottom: 2rem;
+}
+.btn-hero-primary {
+  background-image: -webkit-gradient(linear, left top, right top, from(#425eca), to(#428bca));
+  background-image: linear-gradient(to right, #425eca, #428bca);
+  -webkit-box-shadow: 0 0 0 0 #3964ae, 0 0 0 0 #4274ca;
+  box-shadow: 0 0 0 0 #3964ae, 0 0 0 0 #4274ca;
+  text-shadow: none;
+  border: none;
+  line-height: calc((1rem * 1.25) + 4px);
+}

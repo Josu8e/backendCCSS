@@ -1,0 +1,18 @@
+<div style="visibility: hidden;" class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<div>
+    Fecha: <input type="date" [(ngModel)]="fecha" (change)="consultar()">
+</div>
+
+<div *ngFor="let chart of charts">
+    <chart [data]="chart.data" [type]="chart.type" [options]="chart.options">
+    </chart>
+</div>

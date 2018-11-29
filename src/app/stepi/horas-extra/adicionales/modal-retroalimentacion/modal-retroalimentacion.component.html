@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">Retroalimentación</h4>
+  <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #formSolicitud="ngForm">
+<div class="modal-body">
+  <div class="form-group">
+    <textarea type="text" class="form-control" id="retroalimentacion" name="retroalimentacion" placeholder="Escriba la retroalimentación" [(ngModel)]="this.solicitudActual.retroalimentacion"></textarea>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" name="boton" class="btn btn-danger" (click)="cerrar()" title="Cancelar">
+    <i class="fa fa-times"></i>
+    <span>Cancelar</span>
+  </button>
+  <button type="button" name="boton" class="btn btn-primary" (click)="guardarDatos()" [disabled]="formSolicitud.invalid" title="Guardar">
+    <i class="fa fa-save"></i>
+    <span>Guardar</span>
+  </button>
+</div>
+</form>

@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header><h5 class="modal-title">{{ titulo }}</h5></nb-card-header>
+      <nb-card-body>
+        {{mensaje}}
+      </nb-card-body>
+      <nb-card-footer>
+        <div class="btn-group">
+        <button type="button" class="btn btn-primary" (click)="aceptar()">{{ btnOkText }}</button>
+        <button type="button" class="btn btn-danger" (click)="cancelar()">{{ btnCancelText }}</button>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

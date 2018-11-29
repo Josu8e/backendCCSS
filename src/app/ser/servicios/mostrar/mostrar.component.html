@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="col">
+          <h2>Servicios</h2>
+        </div>
+        <div class="col">
+          <div class="input-group">
+
+            <input type="text" class="form-control" name="buscar" [(ngModel)]="buscar" placeholder="Buscar...">
+
+            <div class="input-group-prepend">
+              <span class="input-group-text color-icon text-light" id="basic-addon1">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+
+            <div class="input-group-btn search-panel dropdownboxClass">
+
+              <select class='form-control' required [(ngModel)]='opcionSeleccionada'>
+                <option class='opcion  bg-light text-dark' *ngFor='let opcion of opciones' [value]="opcion">{{opcion}}</option>
+              </select>
+
+            </div>
+          </div>
+        </div>
+
+      </nb-card-header>
+
+      <nb-card-body>
+        <toaster-container [toasterconfig]="config"></toaster-container>
+        <div class="button-group col align-self-end">
+          <button title="Crear servicio" class="float-right btn btn-success" (click)="abrirModalCrear()">Agregar
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+        <table class="table">
+          <tr>
+            <th>Nombre</th>
+            <th>Código</th>
+            <th>Descripción</th>
+          </tr>
+
+          <tr *ngFor="let ser of servicios | filtro:buscar:opcionSeleccionada | paginate: { itemsPerPage: 6, currentPage: p }">
+            <td>{{ser.nombre}}</td>
+            <td>{{ser.codigo}}</td>
+            <td>{{ser.descripcion}}</td>
+            <td>
+              <div class="btn-group">
+                <button title="Editar servicio" class="btn btn-primary" (click)="abrirModalModificar(ser, ser.id)">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button title="Eliminar servicio" class="btn btn-danger" (click)="openWindowCustomClass(content, ser.id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event"
+                             autoHide="true" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+<div class="modal-header">
+  <h4 class="modal-title">Eliminar Servicios</h4>
+  <button type="button" class="close" aria-label="Close" title="Cerrar" (click)="c('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Seguro que desea eliminar este servicio.</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" title="Cerrar" (click)="c('Close click')">Cerrar</button>
+  <button type="button" (click)="eliminarOficial()" title="Eliminar" (click)="c('Close click')" class="btn btn-danger">
+    Eliminar</button>
+</div>
+</ng-template>
+
+<toaster-container [toasterconfig]="config"></toaster-container>
+
+
+

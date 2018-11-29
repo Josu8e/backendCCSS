@@ -1,0 +1,71 @@
+<div class="row" #page>
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="col">
+          <h2>Reporte por servicio</h2>
+        </div>
+
+
+        <button class="float-right btn btn-success"  title="Imprimir reporte" (click)="downloadPdf()">
+          <i class="fas fa-print"></i>
+        </button>
+
+      </nb-card-header>
+
+      <nb-card-body>
+
+        <toaster-container [toasterconfig]="config"></toaster-container>
+
+        <div class="col-12 col-md-12">
+
+            <nb-card-header>Puestos que pertenecen al servicio<br></nb-card-header>
+
+
+
+            <ngb-accordion  #acc="ngbAccordion" *ngFor="let func of listaPuestosPorServicio | paginate: { itemsPerPage: 6, currentPage: p }"
+                            [closeOthers]="true"  >
+
+              <ngb-panel title={{func.nombre}}   id={{func.codigo}}>
+
+                <ng-template ngbPanelContent>
+
+          <nb-card-body *ngFor="let info of listaPuestosPorServicio">
+            <nb-card-body *ngIf="info.codigo == func.codigo">
+              <td>
+
+                Nombre del Puesto: <b>{{info.nombre}}</b>
+              </td>
+              <td>
+
+                Identificador del puesto: <b>{{info.codigo}}</b>
+              </td>
+              <td>
+                 <!-- <div class="btn-group" routerLink="/ser/reporteServicios/puestoPorServicio/{{info.codigo}}"> -->
+                <div class="btn-group" routerLink="/ser/reportePuestos/funcionarioPorPuesto/{{info.codigo}}">
+
+                    <button class="btn btn-primary" >
+                      <i class="fas fa-eye 2x"></i>
+                    </button>
+                  </div>
+              </td>
+
+            </nb-card-body>
+          </nb-card-body>
+
+
+
+          </ng-template>
+          </ngb-panel>
+          </ngb-accordion>
+
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+                             previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+

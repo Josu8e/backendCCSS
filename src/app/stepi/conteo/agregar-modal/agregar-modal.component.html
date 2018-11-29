@@ -1,0 +1,154 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-sm">
+            <h4>{{titulo}}</h4>
+          </div>
+          <div class="col-sm">
+            <button type="button" class="close" aria-label="Close" title="Cerrar" (click)="cerrar()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+
+
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="h">Puesto:</label>
+          <ng-select title="Seleccionar el puesto" [items]="Puestos" [disabled]="deshabilitado" required [(ngModel)]="puestoActual"
+            name="funcionario" #fun="ngModel" [searchFn]="busquedaPuestos" [virtualScroll]="true" placeholder="Buscar puesto... "
+            [notFoundText]="notFoundText" [clearAllText]="clearAllText">
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+              <span class="ng-value-label">
+                <b>ID: </b>{{item.id}}
+                <b>Nombre:</b>
+                <small>{{item.nombre}}</small>
+              </span>
+            </ng-template>
+            <ng-template class="form-control" ng-option-tmp let-item="item">
+              <b>ID:</b> {{item.id}}
+              <br />
+              <small>
+                <b>Nombre:</b> {{item.nombre}}</small>
+            </ng-template>
+          </ng-select>
+
+          <div *ngIf="fun.invalid && (fun.dirty || fun.touched)">
+            <small *ngIf="fun.errors.required" class="form-text text-muted text-danger text-right">El puesto es
+              requerido.</small>
+          </div>
+        </div>
+
+        <form class="form-horizontal" #form="ngForm">
+          <div  *ngIf="this.solicitudActual.motivo !== 'Producción'"class="form-group">
+            <label class="control-label col-sm-2" for="h">Funcionario:</label>
+            <ng-select title="Seleccionar el funcionario" [items]="Funcionarios" [disabled]="deshabilitado" required
+              [(ngModel)]="funcionarioActual" name="funcionario" #fun="ngModel" [searchFn]="busquedaFuncionarios"
+              [virtualScroll]="true" [placeholder]="placeholder" [notFoundText]="notFoundText" [clearAllText]="clearAllText"
+              (ngModelChange)="filtrarSustituto(funcionarioActual)">
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label">
+                  <b>Cedula: </b>{{item.cedula}}
+                  <b>Nombre:</b>
+                  <small>{{item.nombre}}</small>
+                </span>
+              </ng-template>
+              <ng-template class="form-control" ng-option-tmp let-item="item">
+                <b>Cedula:</b> {{item.cedula}}
+                <br />
+                <small>
+                  <b>Nombre:</b> {{item.nombre}}</small>
+              </ng-template>
+            </ng-select>
+
+            <div *ngIf="fun.invalid && (fun.dirty || fun.touched)">
+              <small *ngIf="fun.errors.required" class="form-text text-muted text-danger text-right">Funcionario es
+                requerido.</small>
+            </div>
+
+          </div>
+
+          <!-- Motivo -->
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="h">Motivo:</label>
+            <ng-select title="Ingrese el motivo" name="motivo" [items]="motivos" [(ngModel)]="this.solicitudActual.motivo"
+              #fun="ngModel" required>
+
+            </ng-select>
+          </div>
+
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="h">Sustituto:</label>
+            <ng-select title="Seleccionar el funcionario" [items]="listaSustitutos" [disabled]="deshabilitado" required
+              [(ngModel)]="sustituto" name="sustituto" #fun="ngModel" [searchFn]="busquedaFuncionarios" [virtualScroll]="true"
+              [placeholder]="placeholder" [notFoundText]="notFoundText" [clearAllText]="clearAllText">
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label">
+                  <b>Cedula: </b>{{item.cedula}}
+                  <b>Nombre:</b>
+                  <small>{{item.nombre}}</small>
+                </span>
+              </ng-template>
+              <ng-template class="form-control" ng-option-tmp let-item="item">
+                <b>Cedula:</b> {{item.cedula}}
+                <br />
+                <small>
+                  <b>Nombre:</b> {{item.nombre}} </small>
+              </ng-template>
+            </ng-select>
+
+            <div *ngIf="fun.invalid && (fun.dirty || fun.touched)">
+              <small *ngIf="fun.errors.required" class="form-text text-muted text-danger text-right">El sustituto es
+                requerido.</small>
+            </div>
+          </div>
+
+
+          <!-- Detalles de incapacidad -->
+
+          <div *ngIf="this.solicitudActual.motivo === 'Incapacidad'">
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="h">Nombre del doctor:</label>
+              <input type="text" [(ngModel)]="this.solicitudActual.doctor" name="doctor">
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="h">Id de la boleta:</label>
+              <input type="text" [(ngModel)]="this.solicitudActual.numeroBoleta" name="boleta">
+            </div>
+          </div>
+
+          <!-- Justificacion -->
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="h">Justificación:</label>
+            <textarea type="text" class="form-control" [(ngModel)]="this.solicitudActual.justificacion" name="justificacion"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="cantidadHoras">Cantidad de horas extra:</label>
+            <div class="col-sm-12">
+              <input type="number" class="cantidadHoras" autocomplete="off" pattern="^$|^([1-9]|[1-2][0-4])?" id="cantidadHoras"
+                title="Cantidad de Horas" placeholder="Cantidad de horas" name="cantidadHoras" #cantidadHoras="ngModel"
+                required [(ngModel)]="this.solicitudActual.horas">
+            </div>
+            <div *ngIf="cantidadHoras.invalid && (cantidadHoras.dirty || cantidadHoras.touched)">
+              <small *ngIf="cantidadHoras.errors.required" class="form-text text-muted text-danger text-right">La
+                cantidad de horas extra es requerido.</small>
+              <small *ngIf="cantidadHoras.errors.pattern" class="form-text text-muted text-danger text-right">La
+                cantidad de horas debe de estar entre 1 y 24</small>
+            </div>
+          </div>
+
+
+          <button type="button" class="btn btn-success" title="Guardar" [disabled]="form.invalid" (click)="guardarDatos()">Guardar</button>
+
+        </form>
+      </nb-card-body>
+      <nb-card-footer></nb-card-footer>
+    </nb-card>
+  </div>
+</div>

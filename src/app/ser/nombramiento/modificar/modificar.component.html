@@ -1,0 +1,122 @@
+<div class="row">
+        <div class="col-12">
+          <nb-card >
+            <nb-card-header>Modificar Nombramiento
+              <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </nb-card-header>
+
+            <nb-card-body >
+              <form  [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)" ngNativeValidate>
+
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="tipo">Nombre del puesto </label>
+                  <div class="col-md-12">
+                    <select class="form-control" id="idPuesto" name="idPuesto"
+                            [formControl]="editForm.get('idPuesto')" id="idPuesto" name="idPuesto"  ngModel={{this.nom.id_puesto}}>
+                      <option *ngFor="let servicio of puestos" value="{{servicio.id}}">{{servicio.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="tipo">Cédula</label>
+                  <div class="col-md-12">
+                    <select class="form-control" id="cedula" name="cedula"
+                            [formControl]="editForm.get('cedula')" id="cedula" name="cedula"  ngModel={{this.nom.cedula}}>
+                      <option *ngFor="let sust of listaFuncionarios" value="{{sust.cedula}}"> <b>Cedula:</b> {{sust.cedula}}
+                        <br />
+                        <small>
+                          - <b>Nombre:</b> {{sust.nombre}}</small>
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              <div class="form-group" >
+                <label class="col-md-12 control-label" >Fecha de inicio</label>
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <input [formControl]="editForm.get('fecha_inicio')" id="fecha_inicio" class="form-control input-md"  [value]=this.nom.fecha_inicio name="fecha_inicio" ngbDatepicker #d="ngbDatepicker" required="">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                        <i class="fas fa-calendar-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12 control-label" >Fecha final</label>
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <input [formControl]="editForm.get('fecha_fin')" id="fecha_fin" class="form-control" name="fecha_fin" [value]=this.nom.fecha_fin  ngbDatepicker #b="ngbDatepicker" required="">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="b.toggle()" type="button">
+                        <i class="fas fa-calendar-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="tipo">Tiempo Laboral</label>
+                  <div class="col-md-12">
+                    <select class="form-control" id="tiempo" name="tiempo"
+                            [formControl]="editForm.get('tiempo')" id="tiempo" name="tiempo" ngModel={{this.nom.tiempo}} >
+                      <option *ngFor="let servicio of listaTiempo" value="{{servicio}}">{{servicio}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group" >
+                  <label class="col-md-12 control-label" for="tipo">Tipo nombramiento</label>
+                  <div class="col-md-12">
+                    <select class="form-control" id="tipo" name="tipo"
+                            [formControl]="editForm.get('tipo')" id="tipo" name="tipo" ngModel={{this.nom.tipo}} >
+                      <option *ngFor="let servicio of listaTipos" value="{{servicio}}">{{servicio}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="tipo">Sustituye a:</label>
+                  <div class="col-md-12">
+                    <select class="form-control" id="sustituye" name="sustituye"
+                            [formControl]="editForm.get('sustituye')" id="sustituye" name="sustituye"  ngModel={{this.nom.sustituye}}>
+                      <option *ngFor="let sust of listaFuncionarios" value="{{sust.nombre}}">{{sust.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-md-12 control-label" for="tipo">Motivo de la sustitución </label>
+                  <div class="col-md-12">
+                    <select class="form-control" id="motivo" name="motivo"
+                            [formControl]="editForm.get('motivo')" id="motivo" name="motivo"  ngModel={{this.nom.motivo}}>
+                      <option *ngFor="let mot of motivo" value="{{mot}}">{{mot}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group" >
+
+                  <button type="button" (click)="cancelar()" class="btn btn-primary" >Cancelar</button>
+
+                  <button type="submit" class="btn btn-primary">Aceptar</button>
+                </div>
+
+
+              </form>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+<toaster-container [toasterconfig]="config"></toaster-container>
+
+

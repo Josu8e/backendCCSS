@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">¿Está seguro que desea aprobar la solicitud?</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-center" role="group">
+    <button type="button" class="btn btn-danger btn-lg" (click)="activeModal.dismiss('Cross click')" title="No">No</button>
+    <button type="button" class="btn btn-success btn-lg" (click)="aprobar()" title="Si">Si</button>
+  </div>
+</div>
+

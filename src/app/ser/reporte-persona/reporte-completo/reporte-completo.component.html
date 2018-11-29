@@ -1,0 +1,62 @@
+<div class="row" #page>
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="col">
+          <h2>Reporte por persona</h2>
+        </div>
+
+
+        <button class="float-right btn btn-success"  title="Imprimir reporte" (click)="downloadPdf()">
+          <i class="fas fa-print"></i>
+        </button>
+
+      </nb-card-header>
+
+      <nb-card-body>
+        <div class="col-12 col-md-12">
+          <nb-card>
+            <nb-card-header>{{informacion?.nombre}} {{informacion?.apellido1}} {{informacion?.apellido2}} </nb-card-header>
+            <nb-card-body>Número de tarjeta: {{informacion?.numero_tarjeta}}</nb-card-body>
+            <nb-card-body>Fecha de ingreso en el centro: {{informacion?.fecha_ingreso}}</nb-card-body>
+          </nb-card>
+        </div>
+
+        <toaster-container [toasterconfig]="config"></toaster-container>
+
+      <div class="col-12 col-md-12">
+          <nb-card-header>Puestos que ha ocupado <br></nb-card-header>
+
+            <ngb-accordion class="tablaPuestos"  #acc="ngbAccordion" *ngFor="let func of puestosFuncionario | paginate: { itemsPerPage: 6, currentPage: p }"
+                           [closeOthers]="true"  >
+
+              <ngb-panel title={{func.nombre}}  id=func.id_puesto>
+                <ng-template ngbPanelContent>
+
+              <nb-card-body *ngFor="let info of informacionPuestos">
+                  <nb-card-body *ngFor="let info2 of info">
+
+                    <nb-card-body *ngIf="info2.id_puesto == func.id_puesto"><b>Fecha de inicio:</b>{{info2.fecha_inicio}}
+                      <b>Fecha de finalización:</b> {{info2.fecha_fin}}
+                      <b>Cantidad de dias:</b> {{info2.numero_dias}} <br><br></nb-card-body>
+                  </nb-card-body>
+              </nb-card-body>
+
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+
+      </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <pagination-controls class="my-pagination pagination justify-content-center" maxSize="9" (pageChange)="p = $event" autoHide="true"
+                             previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+
+
+
+
+

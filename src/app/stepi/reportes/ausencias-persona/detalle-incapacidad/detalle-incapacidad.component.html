@@ -1,0 +1,22 @@
+<div class="row">
+  <nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-sm">
+          <h4>Detalles de la incapacidad</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" title="Cerrar" (click)="cerrar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <small>
+          Nombre del doctor: {{doctor}}
+          Id de la boleta: {{idBoleta}}
+        </small>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

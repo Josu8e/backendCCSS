@@ -1,0 +1,180 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+        {{titulo}}
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </nb-card-header>
+      <nb-card-body>
+        <toaster-container [toasterconfig]="config"></toaster-container>
+
+        <!--_____________________________________________________________________________________________ -->
+
+
+        <form #formR="ngForm" class="form-horizontal">
+          <div class="row">
+
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="cedula">Cedula:</label>
+              <div class="col">
+                <input type="number" #cedula="ngModel" class="form-control" verificarC id="cedula" placeholder="Cedula" name="cedula" required
+                  [(ngModel)]="this.solicitudActual.cedula" [disabled]="desabilitado">
+              </div>
+              <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="col">
+                <small *ngIf="cedula.errors.required" class="form-text text-muted text-danger text-right">Cedula requerida.</small>
+                <small *ngIf="cedula.errors?.verificarC" class="form-text text-danger
+              text-right">Cedula ya en uso.</small>
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="nombre">Nombre:</label>
+              <div class="col">
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre" [(ngModel)]="this.solicitudActual.nombre"
+                  required #nombre="ngModel" [disabled]="desabilitado2">
+              </div>
+              <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="col">
+                <small *ngIf="nombre.errors.required" class="form-text text-muted text-danger text-right">Nombre requerido.</small>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--_____________________________________________________________________________________________ -->
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="apellido1"> Apellido 1:</label>
+              <div class="col">
+                <input type="text" class="form-control" id="apellido1" placeholder="Apellido 1" name="apellido1" [(ngModel)]="this.solicitudActual.apellido1"
+                  required #apellido1="ngModel" [disabled]="desabilitado2">
+              </div>
+              <div *ngIf="apellido1.invalid && (apellido1.dirty || apellido1.touched)" class="col">
+                <small *ngIf="apellido1.errors.required" class="form-text text-muted text-danger text-right">Apellido requerido.</small>
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="apellido2"> Apellido 2:</label>
+              <div class="col">
+                <input type="text" class="form-control" id="apellido2" placeholder="Apellido 2" name="apellido2" [(ngModel)]="this.solicitudActual.apellido2"
+                  [disabled]="desabilitado2">
+              </div>
+            </div>
+          </div>
+
+          <!--_____________________________________________________________________________________________ -->
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="fechaNacimiento">Fecha Nacimiento:</label>
+              <div class="col">
+                <input type="date" class="form-control" id="fechaNacimiento" placeholder="Fecha Nacimiento" name="fechaNacimiento" [(ngModel)]="this.solicitudActual.fecha_nacimiento"
+                  required #fechaNacimiento="ngModel" [disabled]="desabilitado2">
+              </div>
+              <div *ngIf="fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)" class="col">
+                <small *ngIf="fechaNacimiento.errors.required" class="form-text text-muted text-danger text-right">Fecha Nacimiento requerida.</small>
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="fechaIngreso"> Fecha Ingreso:</label>
+              <div class="col">
+                <input type="date" class="form-control" id="fechaIngreso" placeholder="Fecha Ingreso" name="fechaIngreso" [(ngModel)]="this.solicitudActual.fecha_ingreso"
+                  required #fechaIngreso="ngModel" [disabled]="desabilitado2">
+              </div>
+              <div *ngIf="fechaIngreso.invalid && (fechaIngreso.dirty || fechaIngreso.touched)" class="col">
+                <small *ngIf="fechaIngreso.errors.required" class="form-text text-muted text-danger text-right">Fecha Ingreso requerida.</small>
+              </div>
+            </div>
+          </div>
+
+          <!--_____________________________________________________________________________________________ -->
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="numeroTarjeta"> Numero Tarjeta:</label>
+              <div class="col">
+                <input type="number" #numeroTarjeta="ngModel" class="form-control" verificarT id="numeroTarjeta" placeholder="Numero Tarjeta"
+                  name="numeroTarjeta" [(ngModel)]="this.solicitudActual.numero_tarjeta" [disabled]="desabilitado2" required>
+              </div>
+
+              <div *ngIf="numeroTarjeta.invalid && (numeroTarjeta.dirty || numeroTarjeta.touched)" class="col">
+                <small *ngIf="numeroTarjeta.errors.required" class="form-text text-muted text-danger text-right">Numero de tarjeta requerido.</small>
+                <small *ngIf="numeroTarjeta.errors?.verificarT" class="form-text text-danger
+              text-right">Numero de tarjeta ya en uso.</small>
+              </div>
+
+            </div>
+
+
+            <div class="form-group col-md-6 col-sm-12">
+              <label class="control-label col-sm-2" for="correo"> Correo:</label>
+              <div class="col">
+                <input type="email" class="form-control" id="correo" #correo='ngModel' pattern="[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$" verificarCo
+                  placeholder="Correo" name="correo" [(ngModel)]="this.solicitudActual.correo" [disabled]="desabilitado2" required>
+              </div>
+
+              <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="col">
+                <small *ngIf="correo.errors.required" class="form-text text-muted text-danger text-right">Correo requerido.</small>
+                <small *ngIf="correo.errors.pattern" class="form-text text-danger
+              text-right">No es un correo valido.</small>
+                <small *ngIf="correo.errors?.verificarCo" class="form-text text-danger
+              text-right">Correo ya en uso.</small>
+              </div>
+            </div>
+          </div>
+
+          <!--_____________________________________________________________________________________________ -->
+
+
+          <div class="row">
+            <div class="form-group col-md-12 col-sm-12">
+              <label class="control-label col-sm-2" for="telefono"> Telefono:</label>
+
+              <form #formRef="ngForm">
+                <div *ngFor="let tel of this.solicitudActual.telefono; let in=index" class="col">
+                  <div class="form-group">
+                    <input type="number" id="telefono" placeholder="Telefono" [(ngModel)]="this.solicitudActual.telefono[in].numero" name="telefono{{in}}"
+                      class="form-control" required [disabled]="desabilitado2" />
+                  </div>
+                  <br />
+                </div>
+
+
+                <div class="col-12 form-group">
+                  <div class="float-right btn-group">
+                    <button type="button " [disabled]="!formRef.form.valid || this.solicitudActual.telefono.length>=3" class="btn btn-success"
+                      (click)="add(data)" [disabled]="desabilitado2" title="Agregar telefono.">
+                      <i class="fa fa-plus"></i>
+                    </button>
+
+                    <button type="button" [disabled]="1 >= this.solicitudActual.telefono.length" class="btn btn-danger" (click)="delete(data)"
+                      [disabled]="desabilitado2" title="Quitar telefono.">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!--_____________________________________________________________________________________________ -->
+
+          <div class="form-group">
+            <div class="col">
+              <button type="button" class="btn btn-success" (click)="guardarDatos()" [disabled]="desabilitado2 || !formR.form.valid " title="Guardar cambios.">Guardar</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

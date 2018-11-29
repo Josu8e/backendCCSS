@@ -1,0 +1,100 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+<div class="row">
+  <div class="col-12 col-md-12">
+    <nb-card>
+      <nb-card-header>
+
+        <div class="row">
+          <div class="col-sm">
+            <h4>{{titulo}}</h4>
+          </div>
+          <div class="col-sm">
+            <button type="button" class="close" aria-label="Close" title="Cerrar" (click)="cerrar()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+
+        <form class="form-horizontal" #form="ngForm">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="h">Funcionario:</label>
+            <ng-select title="Seleccionar el funcionario, al que pertenece el usuario" [items]="Funcionarios" [disabled]="deshabilitado"
+              verificarF #fun="ngModel" required [(ngModel)]="funcionario" name="funcionario" [searchFn]="busquedaFuncionarios"
+              [virtualScroll]="true" [placeholder]="placeholder" [notFoundText]="notFoundText" [clearAllText]="clearAllText">
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label">
+                  <b>Cedula: </b>{{item.cedula}}
+                  <b>Nombre:</b>
+                  <small>{{item.nombre}}</small>
+                </span>
+              </ng-template>
+              <ng-template class="form-control" ng-option-tmp let-item="item">
+                <b>Cedula:</b> {{item.cedula}}
+                <br />
+                <small>
+                  <b>Nombre:</b> {{item.nombre}}</small>
+              </ng-template>
+            </ng-select>
+
+            <div *ngIf="fun.invalid && (fun.dirty || fun.touched)">
+              <small *ngIf="fun.errors.required" class="form-text text-muted text-danger text-right">Funcionario es requerido.</small>
+              <small *ngIf="fun.errors?.verificarF" class="form-text text-muted text-danger text-right">Este funcionario ya cuenta con un usuario.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="usuario">Usuario:</label>
+            <div class="col-sm-12">
+              <input type="text" verificarU class="usuarios" id="usuario" title="Nombre de usuario" placeholder="Usuario" name="usuario"
+                #usuario="ngModel" required [(ngModel)]="this.solicitudActual.nombre_usuario">
+            </div>
+            <div *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)">
+              <small *ngIf="usuario.errors.required" class="form-text text-muted text-danger text-right">Nombre de usuario requerido.</small>
+              <small *ngIf="usuario.errors?.verificarU" class="form-text text-muted text-danger text-right">El nombre de usuario ya esta en uso.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="stepi">Stepi:</label>
+            <input type="checkbox" name="checkboxStepi" #stepiCheck="ngModel" [required]="!checkboxSer" [(ngModel)]="checkboxStepi" (change)="limpiarSelectStepi(checkboxStepi)">
+            
+            <ng-multiselect-dropdown
+            [(ngModel)]="selectedItems"
+            name="stepi"
+            [disabled]="!checkboxStepi" 
+            #stepi="ngModel"
+            [required]="checkboxStepi"
+            [placeholder]="placeholderMultiSelect"
+            [data]="dropdownList"
+            [(ngModel)]="selectedItems"
+            [settings]="dropdownSettings"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            (onDeSelect)="onItemDeSelect($event)"
+            ></ng-multiselect-dropdown>
+
+            <div *ngIf="stepi.errors?.required">
+              <small class="form-text text-right text-muted text-danger">Acceso a STEPI requerido.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="stepi">Ser:</label>
+            <input type="checkbox" name="checkboxSer" #serCheck="ngModel" [required]="!checkboxStepi" [(ngModel)]="checkboxSer" (change)="limpiarSelectSer(checkboxSer)">
+            <ng-select name="ser" [disabled]="!checkboxSer" title="Tipo de acceso al sistema SER" bindLabel="nombre_acceso" #ser="ngModel"
+              [required]="checkboxSer" [placeholder]="placeholderSelectSer" [items]="opcionesSer" [(ngModel)]="accesoSer">
+            </ng-select>
+            <div *ngIf="ser.errors?.required">
+              <small class="form-text text-muted text-danger text-right">Acceso a SER requerido.</small>
+            </div>
+          </div>
+          <div *ngIf="serCheck.errors?.required && stepiCheck.errors?.required">
+            <small class="form-text text-muted text-danger text-right">Al menos un permiso debe de ser seleccionado.</small>
+          </div>
+          <button type="button" class="btn btn-success" title="Guardar" [disabled]="form.invalid" (click)="guardarDatos()">Guardar</button>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

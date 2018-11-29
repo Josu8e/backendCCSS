@@ -1,0 +1,24 @@
+.table th {
+  border-top: none;
+}
+
+.my-pagination /deep/ .ngx-pagination a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.tablaPuestos {
+  width: 90%;
+}
+.dropdownboxClass select {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  color: white;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+
+.color-icon {
+  background-color: #428bca;
+  border-color: #428bca;
+}
